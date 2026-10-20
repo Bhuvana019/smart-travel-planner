@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommendations — Smart Travel Planner</title>
+  
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+  <link rel="stylesheet" href="../static/css/responsive.css">
+  <style>
+    .comm-console-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+    .comm-console-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    .comm-pane {
+      border-radius: 10px;
+      padding: 1.15rem;
+      border: 1px solid #e2e8f0;
+    }
+    .comm-pane-outbound {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .comm-pane-inbound {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .comm-pane-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .comm-pane-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .comm-metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.08);
+    }
+    .comm-metric-row:last-child {
+      border-bottom: none;
+    }
+    .comm-metric-label {
+      color: #64748b;
+      font-weight: 600;
+      font-size: 0.825rem;
+    }
+    .comm-metric-val {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 0.85rem;
+    }
+    .endpoint-pill {
+      font-family: monospace;
+      font-size: 0.775rem;
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+    .origin-badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .ready-state-box {
+      background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+      border: 2px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-layout">
+
+    <!-- App Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">✈</div>
+        <span>Travel Planner</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Overview</span>
+        <a href="dashboard.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="create_trip.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          <span>New Trip</span>
+        </a>
+
+        <span class="sidebar-section-title">Active Trip &bull; <span style="color: var(--primary); font-weight: 700;">Mysuru</span></span>
+        <div class="sidebar-active-trip-card">
+          <div style="margin: 0.35rem 0.5rem 0.75rem; padding: 0.75rem 0.85rem; background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(14,165,233,0.08) 100%); border: 1px solid rgba(37,99,235,0.22); border-radius: var(--radius-md); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.3rem;">
+              <strong style="color: var(--primary-dark); font-size: 0.88rem; display: flex; align-items: center; gap: 0.35rem; font-weight: 700;">
+                <span>📍</span> <span>Mysuru</span>
+              </strong>
+              <span class="badge badge-primary" style="font-size: 0.65rem; padding: 0.15rem 0.45rem; font-weight: 700; border-radius: 999px;">Current Trip</span>
+            </div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.25rem;">🏷 friends</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.25rem;"><span>📅</span> <span>Oct 23, 2026 – Oct 26, 2026</span></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--text-muted); padding-top: 0.3rem; border-top: 1px dashed rgba(37,99,235,0.2);">
+              <span>👥 2 Travelers</span>
+              <strong style="color: var(--primary-dark); font-weight: 700;">💰 ₹30,000</strong>
+            </div>
+          </div>
+        </div>
+        <a href="trip.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+          <span>Mysuru Overview</span>
+        </a>
+        <a href="itinerary.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span>Mysuru Itinerary</span>
+        </a>
+        <a href="expenses.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Mysuru Expenses</span>
+        </a>
+        <a href="recommendations.html?id=130" class="sidebar-link active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+          <span>Mysuru Recommendations</span>
+        </a>
+
+        <span class="sidebar-section-title">Inter-App Integration</span>
+        <a href="exchange.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+          <span>Data Exchange (:8001)</span>
+        </a>
+
+        <span class="sidebar-section-title">Account</span>
+        <a href="profile.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+          <span>Profile & Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-badge">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Arun Kumar</div>
+            <div class="user-role">Explorer (Demo)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <header class="app-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="btn btn-ghost btn-icon sidebar-toggle-btn mobile-nav-toggle" aria-label="Toggle sidebar">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+          <span style="font-weight: 700; font-size: 1.1rem; color: var(--text-main);">Curated Recommendations</span>
+        </div>
+
+        <a href="trip.html" id="recs-back-to-trip" class="btn btn-outline btn-sm">&larr; Back to Trip</a>
+      </header>
+
+      <main class="app-content">
+        <!-- Trip Subnavigation -->
+        <nav class="trip-subnav">
+          <a href="trip.html" class="trip-subnav-link">
+            📋 Overview
+          </a>
+          <a href="itinerary.html" class="trip-subnav-link">
+            🗓 Itinerary Timeline
+          </a>
+          <a href="expenses.html" class="trip-subnav-link">
+            💳 Expenses &amp; Budget
+          </a>
+          <a href="recommendations.html" class="trip-subnav-link active">
+            🌟 Recommendations
+          </a>
+        </nav>
+
+        <!-- Page Header & Trip Selector Bar -->
+        <div class="page-header" style="flex-wrap: wrap; gap: 1rem; align-items: flex-start;">
+          <div class="page-header-title">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem; flex-wrap: wrap;">
+              <h1 id="recs-dest-title" style="margin: 0;">Recommended Experiences</h1>
+              <span class="badge badge-primary" id="recs-dest-badge">Experiences</span>
+            </div>
+            <p class="page-subtitle" id="recs-dates-sub">Curated activities tailored for your trip</p>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+            <label for="recs-trip-select" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Trip:</label>
+            <select id="recs-trip-select" class="form-control" style="width: auto; min-width: 200px; font-weight: 600;">
+              <option value="">Loading trips...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Trip Context & Primary Action Bar -->
+        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem; background: var(--bg-surface); border: 1px solid var(--border-color);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div style="flex: 1; min-width: 260px;">
+              <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
+                Trip Interests
+              </span>
+              <div id="trip-interests-container" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem;">
+                <span class="badge" style="background: #f1f5f9; color: var(--text-main);">Nature</span>
+                <span class="badge" style="background: #f1f5f9; color: var(--text-main);">Culture</span>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+              <button class="btn btn-outline btn-sm" id="btn-use-interests" title="Select category based on trip interests">
+                ✨ Use Trip Interests
+              </button>
+              <button class="btn btn-primary" id="btn-get-recommendations" onclick="triggerLiveRecommendations()">
+                <span id="btn-recs-icon">⚡</span> Get Recommendations
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Initial Ready State (Displayed Before User Clicks Get Recommendations) -->
+        <div class="ready-state-box" id="recs-ready-card">
+          <div style="display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background: #e0f2fe; color: #0284c7; font-size: 1.85rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);">
+            ⚡
+          </div>
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin: 0 0 0.5rem 0;">
+            Ready to Discover Experiences via Experience Finder API
+          </h2>
+          <p style="font-size: 0.925rem; color: var(--text-muted); max-width: 640px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
+            Destination recommendations are queried on-demand directly from the independent 
+            <strong>Explorely Experience Finder service (:8001)</strong>. No places are pre-loaded.
+            Click below to initiate real-time REST API communication with your trip context 
+            (<strong id="ready-dest-text">Trip</strong> &bull; <strong id="ready-travellers-text">Travelers</strong> &bull; <strong id="ready-budget-text">Budget</strong>).
+          </p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-primary" style="padding: 0.75rem 1.75rem; font-size: 1rem; font-weight: 700;" onclick="triggerLiveRecommendations()">
+              <span>⚡</span> Get Recommendations from Experience Finder (:8001)
+            </button>
+            <a href="http://localhost:8001/integration.html" target="_blank" class="btn btn-outline" style="padding: 0.75rem 1.25rem; font-size: 0.95rem;">
+              📡 Open Experience Finder Live Monitor (:8001) ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Live API Communication Console (Professional Dual-Pane UI) -->
+        <div class="comm-console-card" id="recs-comm-console" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color);">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="badge badge-success">🟢 Live Inter-Microservice REST API Communication</span>
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);" id="comm-timestamp"></span>
+              </div>
+              <h3 style="margin: 0.3rem 0 0 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main);">
+                Experience Finder Service Transaction Console (:8001)
+              </h3>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="http://localhost:8001/integration.html" target="_blank" class="btn btn-sm btn-outline" style="font-weight: 700; color: #2563eb;">
+                ⚡ Experience Finder Live Monitor (:8001) ↗
+              </a>
+              <a href="exchange.html" class="btn btn-sm btn-outline">
+                📋 Exchange Logs
+              </a>
+            </div>
+          </div>
+
+          <div class="comm-console-grid">
+            <!-- Left Pane: Outbound Request to Experience Finder -->
+            <div class="comm-pane comm-pane-outbound">
+              <div class="comm-pane-header">
+                <span class="comm-pane-title" style="color: #0369a1;">
+                  <span>📤</span> Request Sent to Experience Finder (:8001)
+                </span>
+                <span class="badge" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-weight: 700;">
+                  HTTP GET DISPATCHED
+                </span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Target Endpoint</span>
+                <span class="endpoint-pill" id="comm-req-endpoint">GET /api/experiences</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Trip Destination</span>
+                <span class="comm-metric-val" id="comm-req-dest" style="color: #0284c7;">—</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Trip Members</span>
+                <span class="comm-metric-val" id="comm-req-travellers">—</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Trip Target Budget</span>
+                <span class="comm-metric-val" id="comm-req-budget">—</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Filter Category</span>
+                <span class="comm-metric-val" id="comm-req-cat">All</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Keyword Query</span>
+                <span class="comm-metric-val" id="comm-req-search">None (Full Destination)</span>
+              </div>
+            </div>
+
+            <!-- Right Pane: Inbound Response from Experience Finder -->
+            <div class="comm-pane comm-pane-inbound">
+              <div class="comm-pane-header">
+                <span class="comm-pane-title" style="color: #15803d;">
+                  <span>📥</span> Live Response Received from Experience Finder (:8001)
+                </span>
+                <span class="badge" id="comm-res-status-badge" style="background: #dcfce7; color: #15803d; border: 1px solid #86efac; font-weight: 700;">
+                  HTTP 200 OK
+                </span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Service Provider</span>
+                <span class="comm-metric-val" style="color: #15803d;">Explorely Experience Finder Microservice</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Database Origin</span>
+                <span class="comm-metric-val" style="color: #15803d;">explorely.db (Curated India Catalog)</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Verified Experiences Received</span>
+                <span class="comm-metric-val" id="comm-res-count" style="color: #15803d; font-size: 0.95rem;">10 Places</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Communication Latency</span>
+                <span class="comm-metric-val" id="comm-res-latency">~32 ms (FastAPI HTTPX)</span>
+              </div>
+              <div class="comm-metric-row">
+                <span class="comm-metric-label">Data Integrity</span>
+                <span class="comm-metric-val" style="color: #15803d;">100% External Verified Payload</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Friendly Service Failure Error Banner (with Retry and Mock Adapter actions) -->
+        <div class="card" id="recs-error-card" style="display: none; margin-bottom: 1.5rem; padding: 1.25rem; border-left: 4px solid var(--danger); background: #fff1f2;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                <span class="badge badge-danger">⚠️ Service Unavailable</span>
+                <span id="recs-error-url" style="font-size: 0.8rem; color: #9f1239; font-family: monospace;"></span>
+              </div>
+              <h4 id="recs-error-title" style="margin: 0.25rem 0; color: #9f1239; font-size: 1rem;">
+                Experience Finder Service Could Not Be Reached
+              </h4>
+              <p id="recs-error-detail" style="font-size: 0.875rem; color: #b91c1c; margin: 0.25rem 0 0 0; line-height: 1.4;">
+                The external service is offline or timed out after 3.0s. Please verify the service is running or use the development mock adapter.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+              <button class="btn btn-sm btn-primary" id="btn-retry-recs" onclick="loadRecommendationsData(false)">
+                🔄 Retry External Request
+              </button>
+              <button class="btn btn-sm btn-outline" id="btn-dev-adapter" onclick="loadRecommendationsData(true)">
+                🧪 Use Local Dev Mock Adapter (Test Only)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source Transparency Status Banner -->
+        <div class="card" id="recs-source-card" style="display: none; margin-bottom: 1.5rem; padding: 1rem 1.25rem; border-left: 4px solid var(--success); background: var(--bg-surface);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                <span id="recs-source-indicator" class="badge badge-success">🟢 Live External API</span>
+                <span id="recs-source-url" style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace;">Live: http://localhost:8001</span>
+              </div>
+              <p id="recs-source-desc" style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
+                Live response from external Experience Finder service.
+              </p>
+            </div>
+            <a href="exchange.html" class="btn btn-sm btn-outline" style="white-space: nowrap;">
+              📡 View API History &amp; TXT Log &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls Bar -->
+        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem; background: var(--bg-surface); border: 1px solid var(--border-color);">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1rem;">
+            <div style="flex: 2; min-width: 260px;">
+              <label for="recs-search-input" style="display: block; font-size: 0.825rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+                🔍 Search Places to Explore
+              </label>
+              <div style="position: relative;">
+                <input 
+                  type="text" 
+                  id="recs-search-input" 
+                  class="form-control" 
+                  placeholder="Search places, monuments, activities (e.g. Scuba, Temple, Fort, Tea, Beach...)" 
+                  style="padding: 0.6rem 1rem; font-size: 0.925rem; width: 100%;">
+              </div>
+            </div>
+
+            <div style="flex: 1; min-width: 200px;">
+              <label for="recs-dest-filter-select" style="display: block; font-size: 0.825rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+                📍 Destination / Region
+              </label>
+              <select id="recs-dest-filter-select" class="form-control" style="padding: 0.6rem 1rem; font-size: 0.925rem; width: 100%;">
+                <option value="current">Current Trip Destination</option>
+                <option value="All">All India Places</option>
+                <option value="Goa">Goa</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Munnar">Munnar</option>
+                <option value="Jaipur">Jaipur</option>
+                <option value="Kochi">Kochi</option>
+                <option value="Manali">Manali</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Hampi">Hampi</option>
+                <option value="Ooty">Ooty</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Alappuzha">Alappuzha (Alleppey)</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <button class="btn btn-primary" id="btn-search-places" onclick="triggerPlacesSearch()" style="padding: 0.6rem 1.25rem;">
+                <span>⚡</span> Search Places
+              </button>
+              <button class="btn btn-outline" id="btn-reset-search" onclick="resetRecsFilter()" style="padding: 0.6rem 1rem;" title="Reset filters">
+                ↺ Reset
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; border-top: 1px solid var(--border-color); padding-top: 0.85rem;">
+            <div class="category-filter-pills" id="category-filter-pills" style="margin: 0;">
+              <button class="filter-pill active" data-category="All">All Categories</button>
+              <button class="filter-pill" data-category="Adventure">Adventure</button>
+              <button class="filter-pill" data-category="Beach">Beach</button>
+              <button class="filter-pill" data-category="Nature">Nature</button>
+              <button class="filter-pill" data-category="Culture">Culture</button>
+              <button class="filter-pill" data-category="Leisure">Leisure</button>
+              <button class="filter-pill" data-category="Food">Food</button>
+            </div>
+            <div id="recs-results-count-badge" style="font-size: 0.825rem; font-weight: 600; color: var(--text-muted);">
+              Searching places from Experience Finder API...
+            </div>
+          </div>
+        </div>
+
+        <!-- Experiences Cards Grid -->
+        <div class="experiences-grid" id="experiences-grid-container">
+          <!-- Populated by recommendations.js -->
+        </div>
+
+        <!-- Empty State Container -->
+        <div class="card empty-state" id="experiences-empty-state" style="display: none;">
+          <div class="empty-state-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+          <h3 class="empty-state-title" id="empty-state-title">No matching experiences</h3>
+          <p class="empty-state-desc" id="empty-state-desc">Try clearing your search query or selecting a different category filter.</p>
+          <button class="btn btn-sm btn-outline" style="margin-top: 1rem;" onclick="resetRecsFilter()">Clear Category Filter</button>
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../static/js/api.js?v=3.0"></script>
+  <script src="../static/js/main.js?v=3.0"></script>
+  <script src="../static/js/recommendations.js?v=3.0"></script>
+</body>
+</html>

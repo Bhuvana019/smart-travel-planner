@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your Account — Smart Travel Planner</title>
+  
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+  <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <a href="index.html" class="auth-brand">
+        <div class="brand-icon">✈</div>
+        <span>Smart Travel Planner</span>
+      </a>
+      <h1>Start Planning Today</h1>
+      <p>Set up your profile to organize trips, budgets, and activities</p>
+    </div>
+
+    <form id="register-form" novalidate>
+      <div class="form-group" id="group-name">
+        <label for="name" class="form-label">
+          <span>Full Name <span class="required-star">*</span></span>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">👤</span>
+          <input 
+            type="text" 
+            id="name" 
+            class="form-control" 
+            placeholder="e.g. Arun Kumar"
+            required
+            autocomplete="name">
+        </div>
+        <div class="form-error-msg" id="error-name"></div>
+      </div>
+
+      <div class="form-group" id="group-email">
+        <label for="email" class="form-label">
+          <span>Email Address <span class="required-star">*</span></span>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">✉</span>
+          <input 
+            type="email" 
+            id="email" 
+            class="form-control" 
+            placeholder="arun.kumar@example.com"
+            required
+            autocomplete="email">
+        </div>
+        <div class="form-error-msg" id="error-email"></div>
+      </div>
+
+      <div class="form-group" id="group-password">
+        <label for="password" class="form-label">
+          <span>Password <span class="required-star">*</span></span>
+          <span class="form-label-hint">Min. 6 characters</span>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">🔒</span>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-control" 
+            placeholder="Create password"
+            required
+            autocomplete="new-password">
+        </div>
+        <div class="form-error-msg" id="error-password"></div>
+      </div>
+
+      <div class="form-group" id="group-confirm-password">
+        <label for="confirm-password" class="form-label">
+          <span>Confirm Password <span class="required-star">*</span></span>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">🔒</span>
+          <input 
+            type="password" 
+            id="confirm-password" 
+            class="form-control" 
+            placeholder="Re-enter password"
+            required
+            autocomplete="new-password">
+        </div>
+        <div class="form-error-msg" id="error-confirm-password"></div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.5rem;">
+        <label class="checkbox-label">
+          <input type="checkbox" id="terms-agree" required>
+          <span>I agree to the <a href="about.html">Terms of Service</a> &amp; Privacy Policy</span>
+        </label>
+        <div class="form-error-msg" id="error-terms"></div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+        Create Account &rarr;
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <span>Already have an account? </span>
+      <a href="login.html" style="font-weight: 600;">Sign in here</a>
+    </div>
+  </div>
+
+  <script src="../static/js/api.js"></script>
+  <script src="../static/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("register-form");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const passInput = document.getElementById("password");
+      const confirmInput = document.getElementById("confirm-password");
+      const termsInput = document.getElementById("terms-agree");
+
+      [nameInput, emailInput, passInput, confirmInput].forEach(inp => {
+        inp.addEventListener("input", () => Validator.clearFieldError(inp));
+      });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // 1. Name required
+        if (!nameInput.value.trim()) {
+          Validator.setFieldError(nameInput, "Full name is required");
+          isValid = false;
+        }
+
+        // 2. Email required & valid
+        const email = emailInput.value.trim();
+        if (!email) {
+          Validator.setFieldError(emailInput, "Email address is required");
+          isValid = false;
+        } else if (!Validator.isValidEmail(email)) {
+          Validator.setFieldError(emailInput, "Please enter a valid email address");
+          isValid = false;
+        }
+
+        // 3. Password required (min 6 chars)
+        const pass = passInput.value;
+        if (!pass) {
+          Validator.setFieldError(passInput, "Password is required");
+          isValid = false;
+        } else if (pass.length < 6) {
+          Validator.setFieldError(passInput, "Password must be at least 6 characters long");
+          isValid = false;
+        }
+
+        // 4. Password confirmation
+        if (!confirmInput.value) {
+          Validator.setFieldError(confirmInput, "Please confirm your password");
+          isValid = false;
+        } else if (confirmInput.value !== pass) {
+          Validator.setFieldError(confirmInput, "Passwords do not match");
+          isValid = false;
+        }
+
+        // 5. Terms
+        if (!termsInput.checked) {
+          showToast("You must accept the Terms of Service to register", "warning");
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="spinner"></span> Creating account...`;
+
+        try {
+          // Calling API placeholder
+          await ApiService.auth.register({
+            name: nameInput.value.trim(),
+            email: email,
+            password: pass
+          });
+
+          // Update demo user store temporarily
+          DemoStore.updateUser({
+            name: nameInput.value.trim(),
+            email: email
+          });
+
+          showToast("Account created successfully!", "success");
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 800);
+        } catch (err) {
+          const errMsg = err.message || "Registration failed";
+          showToast(errMsg, "error");
+          if (errMsg.toLowerCase().includes("email") || errMsg.toLowerCase().includes("exist")) {
+            Validator.setFieldError(emailInput, errMsg);
+          } else {
+            Validator.setFieldError(nameInput, errMsg);
+          }
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = "Create Account &rarr;";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — Smart Travel Planner</title>
+  
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+  <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <a href="index.html" class="auth-brand">
+        <div class="brand-icon">✈</div>
+        <span>Smart Travel Planner</span>
+      </a>
+      <h1>Welcome back</h1>
+      <p>Sign in to manage your itineraries, budgets, and trips</p>
+    </div>
+
+    <!-- Demo Account Helper Box -->
+    <div class="demo-credentials-box">
+      <strong>Demo Profile (Phase 1)</strong>
+      <span>Email: <code>arun.kumar@example.com</code></span><br>
+      <span>Password: <code>password123</code></span>
+    </div>
+
+    <form id="login-form" novalidate>
+      <div class="form-group" id="group-email">
+        <label for="email" class="form-label">
+          <span>Email Address <span class="required-star">*</span></span>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">✉</span>
+          <input 
+            type="email" 
+            id="email" 
+            class="form-control" 
+            placeholder="name@example.com"
+            value="arun.kumar@example.com"
+            required
+            autocomplete="email">
+        </div>
+        <div class="form-error-msg" id="error-email"></div>
+      </div>
+
+      <div class="form-group" id="group-password">
+        <label for="password" class="form-label">
+          <span>Password <span class="required-star">*</span></span>
+          <a href="#" style="font-size: 0.8rem;" onclick="showToast('Password reset will be available in Phase 2 with FastAPI backend', 'info'); return false;">Forgot?</a>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">🔒</span>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-control" 
+            placeholder="••••••••" 
+            value="password123"
+            required
+            autocomplete="current-password">
+        </div>
+        <div class="form-error-msg" id="error-password"></div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.5rem;">
+        <label class="checkbox-label">
+          <input type="checkbox" id="remember-me" checked>
+          <span>Keep me signed in</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+        Sign In &rarr;
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <span>Don't have an account? </span>
+      <a href="register.html" style="font-weight: 600;">Create one now</a>
+    </div>
+  </div>
+
+  <script src="../static/js/api.js"></script>
+  <script src="../static/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Check if user just logged out
+      if (sessionStorage.getItem("stp_user_logged_out") === "true") {
+        showToast("You have been signed out securely.", "info");
+      }
+
+      const form = document.getElementById("login-form");
+      const emailInput = document.getElementById("email");
+      const passInput = document.getElementById("password");
+
+      emailInput.addEventListener("input", () => Validator.clearFieldError(emailInput));
+      passInput.addEventListener("input", () => Validator.clearFieldError(passInput));
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // 1. Email required & format
+        const email = emailInput.value.trim();
+        if (!email) {
+          Validator.setFieldError(emailInput, "Email address is required");
+          isValid = false;
+        } else if (!Validator.isValidEmail(email)) {
+          Validator.setFieldError(emailInput, "Please enter a valid email address");
+          isValid = false;
+        }
+
+        // 2. Password required
+        const pass = passInput.value.trim();
+        if (!pass) {
+          Validator.setFieldError(passInput, "Password is required");
+          isValid = false;
+        }
+
+        if (!isValid) {
+          showToast("Please fix the validation errors", "error");
+          return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="spinner"></span> Signing in...`;
+
+        try {
+          const res = await ApiService.auth.login({ email, password: pass });
+          const userName = res && res.user && res.user.name ? res.user.name : "Explorer";
+          showToast(`Welcome back, ${userName}!`, "success");
+          
+          const params = new URLSearchParams(window.location.search);
+          const nextUrl = params.get("next") || "dashboard.html";
+          setTimeout(() => {
+            window.location.href = nextUrl;
+          }, 700);
+        } catch (err) {
+          const errorMsg = err.message || "Invalid email or password";
+          showToast(errorMsg, "error");
+          Validator.setFieldError(passInput, errorMsg);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = "Sign In &rarr;";
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Travel Planner — Plan Trips, Track Budgets & Discover Experiences</title>
+  <meta name="description" content="AI-assisted travel planning with interactive itineraries, real-time budget tracking, and curated destination recommendations.">
+  
+  <!-- CSS Stylesheets (Jinja2: {{ url_for('static', path='css/...') }}) -->
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/landing.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+  <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="site-navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">✈</div>
+        <span>Smart Travel Planner</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">How It Works</a></li>
+        <li><a href="about.html#architecture">Architecture</a></li>
+        <li><a href="dashboard.html">Demo App</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-pill">
+            <span>✨ Phase 1 Prototype</span>
+            <span>•</span>
+            <span>Frontend UX Ready</span>
+          </div>
+          <h1 class="hero-title">
+            Plan smarter, travel deeper, <span>spend without stress.</span>
+          </h1>
+          <p class="hero-subtitle">
+            An intelligent trip planning workspace tailored for modern explorers. Organize daily timelines, balance group budgets in real time, and discover curated local adventures.
+          </p>
+
+          <div class="hero-cta">
+            <a href="dashboard.html" class="btn btn-primary btn-lg">
+              Explore Demo Dashboard &rarr;
+            </a>
+            <a href="create_trip.html" class="btn btn-outline btn-lg">
+              + Create a Trip
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat-item">
+              <h4>₹25k</h4>
+              <p>Demo Goa Budget</p>
+            </div>
+            <div class="hero-stat-item">
+              <h4>100%</h4>
+              <p>Interactive Client UX</p>
+            </div>
+            <div class="hero-stat-item">
+              <h4>FastAPI</h4>
+              <p>Ready for Phase 2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Hero Mock Card -->
+        <div class="hero-visual">
+          <div class="floating-badge floating-badge-1">
+            <span style="font-size: 1.4rem;">🌊</span>
+            <div>
+              <strong style="font-size: 0.85rem; display: block;">Goa Beach Vacation</strong>
+              <small style="color: var(--text-muted); font-size: 0.75rem;">15 – 18 Oct 2026</small>
+            </div>
+          </div>
+
+          <div class="hero-preview-card">
+            <div class="preview-trip-header">
+              <div class="preview-dest-badge">
+                <span>📍</span>
+                <span>Goa, India</span>
+              </div>
+              <span class="preview-chip">3 Travelers</span>
+            </div>
+
+            <div class="preview-budget-box">
+              <div class="preview-budget-row">
+                <span class="lbl">Total Budget</span>
+                <span class="val">₹25,000</span>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill fill-safe" style="width: 29%;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">
+                <span>Spent: ₹7,200</span>
+                <span>Remaining: ₹17,800</span>
+              </div>
+            </div>
+
+            <div class="preview-itinerary-list">
+              <div class="preview-itinerary-item">
+                <div class="preview-activity">
+                  <div class="activity-dot"></div>
+                  <div>
+                    <div class="activity-name">Baga Beach Relaxation</div>
+                    <div class="activity-time">Day 1 • 10:30 AM</div>
+                  </div>
+                </div>
+                <div class="activity-price">Free</div>
+              </div>
+
+              <div class="preview-itinerary-item">
+                <div class="preview-activity">
+                  <div class="activity-dot" style="background: var(--secondary);"></div>
+                  <div>
+                    <div class="activity-name">Dolphin Watching Boat</div>
+                    <div class="activity-time">Day 1 • 04:00 PM</div>
+                  </div>
+                </div>
+                <div class="activity-price">₹1,200</div>
+              </div>
+
+              <div class="preview-itinerary-item">
+                <div class="preview-activity">
+                  <div class="activity-dot" style="background: var(--accent);"></div>
+                  <div>
+                    <div class="activity-name">Scuba Diving Grande Island</div>
+                    <div class="activity-time">Day 2 • 09:00 AM</div>
+                  </div>
+                </div>
+                <div class="activity-price">₹2,500</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.25rem; text-align: center;">
+              <a href="trip.html" class="btn btn-sm btn-outline" style="width: 100%;">
+                Preview Full Trip Details &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="floating-badge floating-badge-2">
+            <span style="font-size: 1.4rem;">⭐</span>
+            <div>
+              <strong style="font-size: 0.85rem; display: block;">4.7 Rating</strong>
+              <small style="color: var(--text-muted); font-size: 0.75rem;">Scuba Diving Experience</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Core Capabilities</span>
+        <h2>Everything you need for seamless journeys</h2>
+        <p>Built for clarity, speed, and confidence throughout your travel lifecycle.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: var(--primary-light); color: var(--primary);">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          </div>
+          <h3>Daily Itinerary Timelines</h3>
+          <p>Organize activities chronologically with clear time slots, exact locations, cost estimates, and custom travel notes.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: var(--success-light); color: var(--success);">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3>Dynamic Budget Tracking</h3>
+          <p>Instantly calculate food, transport, stay, and adventure spending with color-coded safety progress bars and category breakdowns.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: var(--accent-light); color: var(--accent);">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+          </div>
+          <h3>Curated Experiences</h3>
+          <p>Discover top rated local adventures, heritage landmarks, and seaside excursions ready to add straight to your itinerary.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Simple Process</span>
+        <h2>How It Works in 3 Steps</h2>
+        <p>From initial inspiration to packing your bags without surprises.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Create Your Trip</h3>
+          <p>Enter your destination, dates, travelers, and spending limit. Set custom themes and notes.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Build Itinerary & Track Costs</h3>
+          <p>Slot day-by-day activities. As expenses occur, log them by category to track remaining budget.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Explore Recommendations</h3>
+          <p>Browse curated destination highlights filtered by Adventure, Culture, Nature, and Beach with 1-click add.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Ready to plan your next journey?</h2>
+        <p>Try the interactive frontend prototype with Arun Kumar's demo Goa vacation.</p>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="dashboard.html" class="btn btn-secondary btn-lg" style="background: white; color: var(--primary);">
+            Open Demo Dashboard
+          </a>
+          <a href="register.html" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
+            Create Free Account
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <span style="font-size: 1.5rem;">✈</span>
+            <span>Smart Travel Planner</span>
+          </div>
+          <p class="footer-desc">
+            Phase 1 Frontend Prototype. Engineered with HTML5, CSS3, Vanilla JS, and Jinja2-ready structure for FastAPI integration.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Landing Page</a></li>
+            <li><a href="about.html">About & Architecture</a></li>
+            <li><a href="login.html">Sign In</a></li>
+            <li><a href="register.html">Sign Up</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>App Views</h4>
+          <ul class="footer-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="create_trip.html">Create Trip</a></li>
+            <li><a href="trip.html">Trip Details</a></li>
+            <li><a href="itinerary.html">Itinerary</a></li>
+            <li><a href="expenses.html">Expenses</a></li>
+            <li><a href="recommendations.html">Recommendations</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Phase 1 Status</h4>
+          <p style="font-size: 0.85rem; line-height: 1.6; color: #94a3b8;">
+            Client-Side UX complete.<br>
+            Backend & External APIs isolated until Phase 2 & 3.
+          </p>
+          <div style="margin-top: 1rem;">
+            <button class="btn btn-outline btn-sm" style="color: white; border-color: #334155;" onclick="DemoStore.reset()">
+              Reset Demo Data
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Smart Travel Planner. Frontend-First Prototype.</p>
+        <span class="demo-badge-pill">Phase 1: Frontend Only</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../static/js/main.js"></script>
+</body>
+</html>

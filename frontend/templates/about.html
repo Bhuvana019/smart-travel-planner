@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About & How It Works — Smart Travel Planner</title>
+  
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/landing.css">
+  <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="site-navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">✈</div>
+        <span>Smart Travel Planner</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">How It Works</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="dashboard.html">Demo App</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+        <a href="dashboard.html" class="btn btn-primary btn-sm">Dashboard</a>
+      </div>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- About Hero -->
+  <header class="about-hero">
+    <div class="container">
+      <span class="badge badge-primary" style="margin-bottom: 1rem;">Engineering Blueprint</span>
+      <h1>About Smart Travel Planner</h1>
+      <p>
+        A modern, frontend-first travel management system designed for intuitive itinerary building, dynamic budget calculations, and destination experiences.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="about-content-section">
+    <div class="container">
+
+      <!-- Mission & Overview -->
+      <div class="about-mission-grid">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">Design Principles</span>
+          <h2 style="font-size: 2rem; margin: 0.5rem 0 1rem;">Frontend-First Engineering</h2>
+          <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem;">
+            Before touching backend servers, database schemas, or third-party APIs, we validate every user interaction, form workflow, modal behavior, and responsive layout.
+          </p>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            This prototype delivers full client interactivity powered by temporary in-memory and local storage demo data — featuring <strong>Arun Kumar's 4-day trip to Goa</strong> (₹25,000 budget, 3 travelers).
+          </p>
+        </div>
+
+        <div class="card" style="padding: 2rem; background: var(--bg-surface); border: 2px dashed var(--primary-light);">
+          <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--primary);">Phase Roadmap</h3>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <span class="badge badge-success">Phase 1 (Current)</span>
+              <div>
+                <strong>Frontend UX & Templates</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">HTML5, CSS3, Vanilla JS, Jinja2 templates, interactive validation, demo data.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <span class="badge badge-neutral">Phase 2</span>
+              <div>
+                <strong>FastAPI & Persistence</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">FastAPI endpoints, SQLAlchemy models, database, real CRUD & auth.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <span class="badge badge-neutral">Phase 3</span>
+              <div>
+                <strong>Experience Finder API</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Backend proxy integration to external recommendations API.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture Section -->
+      <section id="architecture" style="margin-top: 4rem;">
+        <div class="section-head" style="margin-bottom: 2.5rem;">
+          <span class="section-tag">System Boundary</span>
+          <h2>Clear Architectural Isolation</h2>
+          <p>
+            Strict separation ensures the client browser never contacts external vendor APIs directly.
+          </p>
+        </div>
+
+        <div class="architecture-preview-box">
+<pre>
+┌────────────────────────────────────────────────────────────────────────┐
+│                        CLIENT / WEB BROWSER                            │
+│  • HTML5 Templates (Jinja2 Compatible)                                 │
+│  • Vanilla JavaScript Modules (main.js, trips.js, itinerary.js, etc.)   │
+│  • Client-side validation & temporary in-memory store                  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                       HTTP / JSON  │ (Phase 2 & 3: FastAPI internal endpoints)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                 SMART TRAVEL PLANNER FASTAPI BACKEND                   │
+│  • Authentication (JWT & Password Hashing)                             │
+│  • Database (SQLAlchemy, Trips, Itineraries, Expenses)                │
+│  • Server-side budget validation & CRUD business logic                │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                         REST API   │ (Phase 3: Server-to-Server communication)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                   EXTERNAL EXPERIENCE FINDER API                       │
+│  • Curated outdoor activities, sightseeing, ratings & pricing          │
+│  • Never directly accessed by the browser client                       │
+└────────────────────────────────────────────────────────────────────────┘
+</pre>
+        </div>
+      </section>
+
+      <!-- Demo Data Summary -->
+      <section style="margin-top: 4rem;">
+        <div class="card" style="padding: 2.5rem; background: var(--bg-surface);">
+          <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Demo Data Contract Specifications</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+            Every interactive page operates against predictable JSON data contracts designed for seamless FastAPI serialization in Phase 2:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <div style="background: var(--bg-page); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Trip Contract</h4>
+              <code style="font-size: 0.8rem; display: block; white-space: pre; color: var(--text-muted);">
+{
+  "trip_id": 101,
+  "destination": "Goa",
+  "start_date": "2026-10-15",
+  "end_date": "2026-10-18",
+  "travellers": 3,
+  "budget": 25000
+}
+              </code>
+            </div>
+
+            <div style="background: var(--bg-page); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <h4 style="margin-bottom: 0.5rem; color: var(--secondary);">Expense Contract</h4>
+              <code style="font-size: 0.8rem; display: block; white-space: pre; color: var(--text-muted);">
+{
+  "expense_id": 1,
+  "category": "Food",
+  "amount": 850,
+  "description": "Dinner",
+  "expense_date": "2026-10-15"
+}
+              </code>
+            </div>
+
+            <div style="background: var(--bg-page); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <h4 style="margin-bottom: 0.5rem; color: var(--accent);">Experience Contract</h4>
+              <code style="font-size: 0.8rem; display: block; white-space: pre; color: var(--text-muted);">
+{
+  "id": 1,
+  "name": "Scuba Diving",
+  "category": "Adventure",
+  "price": 2500,
+  "rating": 4.7
+}
+              </code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div style="text-align: center; margin-top: 4rem;">
+        <a href="dashboard.html" class="btn btn-primary btn-lg">Launch Demo Dashboard &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 Smart Travel Planner. Frontend-First Prototype.</p>
+        <span class="demo-badge-pill">Phase 1: Frontend Only</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../static/js/main.js"></script>
+</body>
+</html>

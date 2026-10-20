@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Communication History &amp; Records — Smart Travel Planner</title>
+  
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <link rel="stylesheet" href="../static/css/forms.css">
+  <link rel="stylesheet" href="../static/css/responsive.css">
+</head>
+<body>
+
+  <div class="mobile-overlay"></div>
+
+  <div class="app-layout">
+
+    <!-- App Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">✈</div>
+        <span>Travel Planner</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="sidebar-section-title">Overview</span>
+        <a href="dashboard.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="create_trip.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          <span>New Trip</span>
+        </a>
+
+        <span class="sidebar-section-title">Active Trip &bull; <span style="color: var(--primary); font-weight: 700;">Mysuru</span></span>
+        <div class="sidebar-active-trip-card">
+          <div style="margin: 0.35rem 0.5rem 0.75rem; padding: 0.75rem 0.85rem; background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(14,165,233,0.08) 100%); border: 1px solid rgba(37,99,235,0.22); border-radius: var(--radius-md); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.3rem;">
+              <strong style="color: var(--primary-dark); font-size: 0.88rem; display: flex; align-items: center; gap: 0.35rem; font-weight: 700;">
+                <span>📍</span> <span>Mysuru</span>
+              </strong>
+              <span class="badge badge-primary" style="font-size: 0.65rem; padding: 0.15rem 0.45rem; font-weight: 700; border-radius: 999px;">Current Trip</span>
+            </div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.25rem;">🏷 friends</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.25rem;"><span>📅</span> <span>Oct 23, 2026 – Oct 26, 2026</span></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--text-muted); padding-top: 0.3rem; border-top: 1px dashed rgba(37,99,235,0.2);">
+              <span>👥 2 Travelers</span>
+              <strong style="color: var(--primary-dark); font-weight: 700;">💰 ₹30,000</strong>
+            </div>
+          </div>
+        </div>
+        <a href="trip.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+          <span>Mysuru Overview</span>
+        </a>
+        <a href="itinerary.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span>Mysuru Itinerary</span>
+        </a>
+        <a href="expenses.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Mysuru Expenses</span>
+        </a>
+        <a href="recommendations.html?id=130" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+          <span>Mysuru Recommendations</span>
+        </a>
+
+        <span class="sidebar-section-title">Integration &amp; Records</span>
+        <a href="exchange.html" class="sidebar-link active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          <span>API History &amp; Records</span>
+        </a>
+
+        <span class="sidebar-section-title">Account</span>
+        <a href="profile.html" class="sidebar-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+          <span>Profile &amp; Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-badge">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Arun Kumar</div>
+            <div class="user-role">Explorer (Demo)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <header class="app-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="btn btn-ghost btn-icon sidebar-toggle-btn mobile-nav-toggle" aria-label="Toggle sidebar">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+          <span style="font-weight: 700; font-size: 1.1rem; color: var(--text-main);">API Communication History</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="/api/recommendations/history/download" class="btn btn-sm btn-primary" download>
+            ⬇ Download API History (.txt)
+          </a>
+          <a href="/docs" target="_blank" class="btn btn-sm btn-outline">
+            FastAPI Swagger Docs ↗
+          </a>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="page-header-title">
+            <h1>API Communication History &amp; Records</h1>
+            <p class="page-subtitle">Real-time audit log of recommendation requests, external Experience Finder calls, and downloadable TXT inspection records.</p>
+          </div>
+          <span class="badge badge-success">Live Auditing Active</span>
+        </div>
+
+        <!-- System Configuration & Live Status Card -->
+        <div class="card" style="margin-bottom: 2rem; border-left: 4px solid var(--primary); padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 0.25rem;">
+                External Service Integration Configuration
+              </div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.35rem; color: var(--text-main);">
+                Experience Finder Service: <code id="configured-api-url" style="background: var(--bg-muted); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 1rem;">http://localhost:8001</code>
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
+                Configurable via <code>EXPERIENCE_API_URL</code> environment variable. When online, real responses are retrieved and recorded; if offline, local sample catalog is clearly labelled as fallback.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <span id="service-status-pill" class="badge badge-neutral" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                ● Checking Service Status...
+              </span>
+              <button class="btn btn-sm btn-secondary" onclick="testLiveRecommendationCall()">
+                ⚡ Trigger Outbound Call (:8000 &rarr; :8001)
+              </button>
+              <button class="btn btn-sm btn-outline" onclick="testInboundIntegrationCall()">
+                🔄 Test Inbound Reverse Call (:8001 &rarr; :8000)
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Downloadable Records Section -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+          <!-- Card 1: API Communication Log TXT -->
+          <div class="card">
+            <div class="card-header">
+              <h3>📄 API Communication History TXT Record</h3>
+              <span class="badge badge-primary">Official Log</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Exports a structured, timestamped text file recording every recommendation request, target URL, HTTP response status, source transparency label, and result summary.
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="/api/recommendations/history/download" class="btn btn-primary btn-sm" download>
+                  ⬇ Download API History Record (.txt)
+                </a>
+                <button class="btn btn-outline btn-sm" onclick="previewApiHistoryModal()">
+                  👁 Preview In Modal
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Complete Trip Dossier TXT -->
+          <div class="card">
+            <div class="card-header">
+              <h3>📋 Complete Trip Dossier TXT Record</h3>
+              <span class="badge badge-success">Dossier Export</span>
+            </div>
+            <div class="card-body">
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Generates a complete travel dossier text file containing trip dates, allocated budget, ₹7,200 spent, ₹17,800 remaining, category breakdown, and scheduled activities.
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-sm" onclick="downloadTripDossier(typeof getActiveTripId === 'function' && getActiveTripId() ? getActiveTripId() : 130)">
+                  ⬇ Download Active Trip Dossier (.txt)
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="previewTripDossier(typeof getActiveTripId === 'function' && getActiveTripId() ? getActiveTripId() : 130)">
+                  👁 Preview Content
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live API Communication Audit Trail Table -->
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3>Live Recommendation API Call History</h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Logs every external API interaction and local fallback occurrence</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-sm btn-outline" onclick="loadApiHistory()">↻ Refresh</button>
+              <button class="btn btn-sm btn-ghost text-danger" onclick="clearApiHistoryLogs()">Clear History</button>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 160px;">Timestamp</th>
+                  <th>Destination &amp; Category</th>
+                  <th>Target URL</th>
+                  <th>Status &amp; HTTP Code</th>
+                  <th>Data Source</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody id="api-history-tbody">
+                <tr>
+                  <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    Loading API communication history...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- TXT Preview Modal -->
+  <div class="modal-backdrop" id="txt-preview-modal">
+    <div class="modal-container" style="max-width: 720px;">
+      <div class="modal-header">
+        <h3 id="modal-txt-title">Text Record Preview</h3>
+        <button class="modal-close-btn" onclick="closeModal('txt-preview-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <pre style="background: #0f172a; color: #f8fafc; font-family: monospace; font-size: 0.85rem; padding: 1.25rem; border-radius: var(--radius-md); white-space: pre-wrap; line-height: 1.5; max-height: 450px; overflow-y: auto;" id="modal-txt-content"></pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal('txt-preview-modal')">Close</button>
+        <a id="modal-txt-download-btn" href="#" class="btn btn-primary" download>⬇ Download This .txt File</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../static/js/api.js?v=3.0"></script>
+  <script src="../static/js/main.js?v=3.0"></script>
+  <script>
+    async function checkExperienceApiStatus() {
+      const pill = document.getElementById("service-status-pill");
+      try {
+        const res = await fetch("/api/sync/status");
+        const data = await res.json();
+        if (data.online) {
+          pill.className = "badge badge-success";
+          pill.innerHTML = `● Experience Finder Online (:8001)`;
+        } else {
+          pill.className = "badge badge-warning";
+          pill.innerHTML = `○ Experience Finder Offline (Fallback Mode)`;
+        }
+      } catch (err) {
+        pill.className = "badge badge-warning";
+        pill.innerHTML = `○ Experience Finder Offline (Fallback Mode)`;
+      }
+    }
+
+    async function loadApiHistory() {
+      const tbody = document.getElementById("api-history-tbody");
+      try {
+        const res = await fetch("/api/recommendations/history");
+        const data = await res.json();
+        const history = data.history || [];
+
+        if (history.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                No recommendation API calls recorded yet. Click "Trigger Test API Call" or open the Recommendations page to see live events logged here!
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = history.map(h => {
+          const isSuccess = h.status === "SUCCESS";
+          const statusBadge = isSuccess ? "badge-success" : "badge-warning";
+          const sourceBadge = h.is_external ? "badge-primary" : "badge-neutral";
+          const isInbound = h.direction && h.direction.includes("INBOUND");
+          const dirBadge = isInbound
+            ? `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-size:0.7rem; margin-top:3px; display:inline-block;">📥 INBOUND (Finder &rarr; Planner)</span>`
+            : `<span class="badge" style="background:#f0fdf4; color:#15803d; font-size:0.7rem; margin-top:3px; display:inline-block;">📤 OUTBOUND (Planner &rarr; Finder)</span>`;
+
+          return `
+            <tr>
+              <td style="font-size: 0.85rem; white-space: nowrap;">
+                <strong>${escapeHtml(h.timestamp)}</strong><br>
+                ${dirBadge}
+              </td>
+              <td>
+                <strong>${escapeHtml(h.destination)}</strong><br>
+                <span style="font-size: 0.78rem; color: var(--text-muted);">Category: ${escapeHtml(h.category)}</span>
+              </td>
+              <td style="font-family: monospace; font-size: 0.78rem; word-break: break-all; max-width: 220px;">
+                ${escapeHtml(h.target_url)}
+              </td>
+              <td>
+                <span class="badge ${statusBadge}">${escapeHtml(h.status)}</span><br>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">${escapeHtml(h.status_code)}</span>
+              </td>
+              <td>
+                <span class="badge ${sourceBadge}">${escapeHtml(h.source)}</span>
+              </td>
+              <td style="font-size: 0.85rem; color: var(--text-main);">
+                ${escapeHtml(h.details)}
+              </td>
+            </tr>
+          `;
+        }).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="color: var(--danger); text-align: center; padding: 1.5rem;">Failed to load API history: ${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    async function testLiveRecommendationCall() {
+      try {
+        const tid = (typeof getActiveTripId === 'function' && getActiveTripId()) ? getActiveTripId() : 130;
+        showToast("Triggering recommendation request to API...", "info");
+        const res = await fetch(`/api/trips/${tid}/recommendations?category=Adventure`);
+        const data = await res.json();
+        const count = data.experiences ? data.experiences.length : 0;
+        showToast(`Request complete! Returned ${count} experiences (${data.source}).`, "success");
+        await loadApiHistory();
+      } catch (err) {
+        showToast("Error triggering API: " + err.message, "error");
+        await loadApiHistory();
+      }
+    }
+
+    async function testInboundIntegrationCall() {
+      try {
+        const tid = (typeof getActiveTripId === 'function' && getActiveTripId()) ? getActiveTripId() : 130;
+        showToast("Triggering reverse inbound request from Experience Finder (:8001)...", "info");
+        // Test calling Experience Finder's reverse integration trigger or direct endpoint with key
+        const res = await fetch(`/api/integration/trips/${tid}/summary`, {
+          headers: { "X-Integration-Key": "st_partner_secret_key_2026" }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          const actCount = data.selected_itinerary_activities ? data.selected_itinerary_activities.length : 0;
+          showToast(`Reverse Inbound Success! Trip #${data.trip_id} (${data.destination}) served with ${actCount} activities.`, "success");
+        } else {
+          showToast(`Inbound Error: ${data.detail}`, "error");
+        }
+        await loadApiHistory();
+      } catch (err) {
+        showToast("Inbound test error: " + err.message, "error");
+        await loadApiHistory();
+      }
+    }
+
+
+    async function clearApiHistoryLogs() {
+      if (confirm("Clear all recorded API communication logs?")) {
+        try {
+          await fetch("/api/recommendations/history/clear", { method: "POST" });
+          showToast("API communication history cleared", "warning");
+          await loadApiHistory();
+        } catch (err) {
+          showToast("Failed to clear history", "error");
+        }
+      }
+    }
+
+    async function previewApiHistoryModal() {
+      try {
+        const res = await fetch("/api/recommendations/history/download");
+        const text = await res.text();
+        document.getElementById("modal-txt-title").textContent = "📄 API_Communication_History.txt";
+        document.getElementById("modal-txt-content").textContent = text;
+
+        const downloadBtn = document.getElementById("modal-txt-download-btn");
+        downloadBtn.href = "/api/recommendations/history/download";
+        downloadBtn.setAttribute("download", "API_Communication_History.txt");
+
+        openModal("txt-preview-modal");
+      } catch (err) {
+        showToast("Failed to preview text record", "error");
+      }
+    }
+
+    async function previewTripDossier(tripId) {
+      try {
+        const res = await fetch(`/api/sync/export-trip-text/${tripId}`);
+        const data = await res.json();
+        document.getElementById("modal-txt-title").textContent = `📄 ${data.filename}`;
+        document.getElementById("modal-txt-content").textContent = data.content;
+
+        const blob = new Blob([data.content], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const downloadBtn = document.getElementById("modal-txt-download-btn");
+        downloadBtn.href = url;
+        downloadBtn.setAttribute("download", data.filename);
+
+        openModal("txt-preview-modal");
+      } catch (err) {
+        showToast("Failed to generate trip preview", "error");
+      }
+    }
+
+    async function downloadTripDossier(tripId) {
+      try {
+        const res = await fetch(`/api/sync/export-trip-text/${tripId}`);
+        const data = await res.json();
+        const blob = new Blob([data.content], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = data.filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast(`Downloaded ${data.filename}`, "success");
+      } catch (err) {
+        showToast("Failed to export trip text dossier", "error");
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // Initial load and periodic refresh
+    document.addEventListener("DOMContentLoaded", () => {
+      checkExperienceApiStatus();
+      loadApiHistory();
+      setInterval(() => {
+        checkExperienceApiStatus();
+        loadApiHistory();
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
