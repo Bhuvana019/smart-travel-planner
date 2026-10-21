@@ -353,6 +353,8 @@ async def fetch_experiences_from_finder(
                     item_dest = str(item.get("destination") or dest_str or "").strip()
                     dur = str(item.get("duration") or "").strip()
                     img = str(item.get("image_url") or "").strip()
+                    if img.startswith("/"):
+                        img = f"{EXPERIENCE_FINDER_API_URL}{img}"
                     loc = str(item.get("locality") or "").strip()
                     rev_count = int(item.get("review_count") or 0)
 
