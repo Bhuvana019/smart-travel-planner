@@ -567,8 +567,13 @@ function renderExperiencesList(experiences) {
       ratingHtml = `<span class="experience-rating-pill">⭐ ${Number(rec.rating).toFixed(1)}</span>`;
     }
 
-    const imgStyle = rec.image_url 
-      ? `background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%), url('${escapeHtml(rec.image_url)}') center/cover no-repeat;`
+    let rawImg = rec.image_url || "";
+    if (rawImg.startsWith("/")) {
+      const partnerBase = window.location.port === "8000" ? "http://localhost:8001" : "";
+      rawImg = partnerBase + rawImg;
+    }
+    const imgStyle = rawImg 
+      ? `background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%), url('${escapeHtml(rawImg)}') center/cover no-repeat;`
       : `background: ${cardBg};`;
 
     let locationHtml = "";
